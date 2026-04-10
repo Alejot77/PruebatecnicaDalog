@@ -11,7 +11,7 @@ import { REPORTS_STORAGE_KEY } from "../utils/reportStorage";
 const MOCK_REPORTS: Report[] = [
   {
     id: "1",
-    patientName: "vibration_analysis_01.pdf",
+    reportName: "vibration_analysis_01.pdf",
     testType: "Vibration",
     createdAt: "2023-10-01",
     status: "success",
@@ -19,7 +19,7 @@ const MOCK_REPORTS: Report[] = [
   },
   {
     id: "2",
-    patientName: "motor_thermal_B.csv",
+    reportName: "motor_thermal_B.csv",
     testType: "Thermal",
     createdAt: "2023-10-02",
     status: "success",

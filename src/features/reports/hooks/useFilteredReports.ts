@@ -9,7 +9,7 @@ export function useFilteredReports(reports: Report[], searchQuery: string) {
     }
 
     return reports.filter((report) =>
-      report.patientName.toLowerCase().includes(query),
+      report.reportName.toLowerCase().includes(query),
     );
   }, [reports, searchQuery]);
 }

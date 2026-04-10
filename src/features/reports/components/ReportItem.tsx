@@ -16,7 +16,7 @@ function ReportItemComponent({ report }: ReportItemProps) {
   return (
     <li className="report-item">
       <div className="report-item__main">
-        <p className="report-item__title">{report.patientName}</p>
+        <p className="report-item__title">{report.reportName}</p>
         <div className="report-item__meta-grid">
           <p className="report-item__meta">
             <span>Type:</span> {report.testType}

@@ -24,6 +24,7 @@ function formatFileSize(bytes: number): string {
 function UploadAreaComponent() {
   const [isDragActive, setIsDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const dragDepthRef = useRef(0);
   const addReport = useReportStore((state) => state.addReport);
   const {
     uploadStatus,
@@ -60,7 +61,7 @@ function UploadAreaComponent() {
 
       const newReport: Report = {
         id: `rep-${Date.now()}`,
-        patientName: result.fileName,
+        reportName: result.fileName || file.name,
         testType: "Uploaded file",
         createdAt: new Date().toISOString(),
         status: "success",
@@ -75,18 +76,29 @@ function UploadAreaComponent() {
     [addReport, setUploadError, uploadReport, validateFile],
   );
 
-  const handleDragOver = useCallback((event: DragEvent<HTMLElement>) => {
+  const handleDragEnter = useCallback((event: DragEvent<HTMLElement>) => {
     event.preventDefault();
+    dragDepthRef.current += 1;
     setIsDragActive(true);
   }, []);
 
-  const handleDragLeave = useCallback(() => {
-    setIsDragActive(false);
+  const handleDragOver = useCallback((event: DragEvent<HTMLElement>) => {
+    event.preventDefault();
+  }, []);
+
+  const handleDragLeave = useCallback((event: DragEvent<HTMLElement>) => {
+    event.preventDefault();
+    dragDepthRef.current -= 1;
+    if (dragDepthRef.current <= 0) {
+      dragDepthRef.current = 0;
+      setIsDragActive(false);
+    }
   }, []);
 
   const handleDrop = useCallback(
     (event: DragEvent<HTMLElement>) => {
       event.preventDefault();
+      dragDepthRef.current = 0;
       setIsDragActive(false);
       void handleFile(event.dataTransfer.files?.[0] ?? null);
     },
@@ -115,6 +127,7 @@ function UploadAreaComponent() {
     <section
       className={`upload-area ${isDragActive ? "upload-area--active" : ""}`}
       aria-labelledby="upload-title"
+      onDragEnter={handleDragEnter}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
@@ -176,7 +189,7 @@ function UploadAreaComponent() {
 
       {uploadStatus === "error" ? (
         <div className="upload-message upload-message--error" role="alert">
-          <p>Upload failed. {uploadMessage}</p>
+          <p>{uploadMessage ?? "Something went wrong. Please try again."}</p>
           <button type="button" onClick={resetUploadStatus}>
             Dismiss
           </button>

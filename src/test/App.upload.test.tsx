@@ -53,26 +53,25 @@ describe("Upload flow", () => {
 
     await waitFor(() => {
       expect(screen.getByText(/Upload successful\./i)).toBeInTheDocument();
-      expect(screen.getByText("lab-results.pdf")).toBeInTheDocument();
+      expect(screen.getByRole("listitem")).toHaveTextContent(/lab-results\.pdf/);
     });
   });
 
-  it("shows error message when upload fails using shouldFail=true", async () => {
-    vi.useFakeTimers();
+  it("shows error message when upload fails after file is selected", async () => {
+    vi.spyOn(uploadService, "uploadReport").mockRejectedValue(
+      new Error("Upload failed. Please try again."),
+    );
+
     render(<App />);
 
+    const input = await screen.findByLabelText("Upload report file");
     const file = new File(["csv-content"], "bad.csv", {
       type: "text/csv",
     });
-
-    const uploadPromise = useUploadStore
-      .getState()
-      .uploadReport(file, { shouldFail: true });
-    await vi.advanceTimersByTimeAsync(2000);
-    await uploadPromise;
+    fireEvent.change(input, { target: { files: [file] } });
 
     await waitFor(() => {
-      expect(screen.getByText(/Upload failed\./i)).toBeInTheDocument();
+      expect(screen.getByRole("alert")).toHaveTextContent(/Upload failed/i);
     });
   });
 });
