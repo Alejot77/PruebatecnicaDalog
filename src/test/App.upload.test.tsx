@@ -43,12 +43,16 @@ describe("Upload flow", () => {
     });
     fireEvent.change(input, { target: { files: [file] } });
 
-    expect(await screen.findByText("Uploading...")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText("Uploading...")).toBeInTheDocument();
+    });
 
     resolveUpload?.({ fileName: "lab-results.pdf" });
 
-    expect(await screen.findByText(/Upload successful\./i)).toBeInTheDocument();
-    expect(await screen.findByText("lab-results")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(/Upload successful\./i)).toBeInTheDocument();
+      expect(screen.getByText("lab-results")).toBeInTheDocument();
+    });
   });
 
   it("shows error message when upload fails using shouldFail=true", async () => {

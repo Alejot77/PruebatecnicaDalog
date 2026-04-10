@@ -64,3 +64,9 @@ Se cubren comportamientos críticos:
 - Flujo de error de upload con `shouldFail=true`.
 
 Estos tests validan la experiencia de usuario y la confiabilidad del flujo principal, evitando depender de detalles internos de implementación.
+
+## 🔍 Posibles mejoras futuras
+- Implementación de reintentos (retry) en uploads fallidos.
+- Soporte para múltiples cargas concurrentes.
+- Integración con un backend real.
+- Paginación o virtualización para grandes volúmenes de datos.

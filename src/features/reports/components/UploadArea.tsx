@@ -61,6 +61,10 @@ function UploadAreaComponent() {
         status: "reviewing",
       };
       addReport(newReport);
+      // Reset file input so the same file can be selected again immediately.
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     },
     [addReport, setUploadError, uploadReport, validateFile],
   );
@@ -117,7 +121,8 @@ function UploadAreaComponent() {
         className="upload-area__dropzone"
         aria-hidden="true"
       >
-        Drop file here or use the button to select
+        <span className="upload-area__icon">^</span>
+        <span>Drop file here or use the button to select</span>
       </div>
 
       <button
