@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { reportService } from "../services/reportService";
 import type { Report } from "../types/report";
+import { loadReportsFromStorage, saveReportsToStorage } from "../utils/reportStorage";
 
 interface ReportState {
   reports: Report[];
@@ -19,13 +20,21 @@ export const useReportStore = create<ReportState>((set) => ({
   error: null,
   setSearchQuery: (value) => set({ searchQuery: value }),
   addReport: (report) =>
-    set((state) => ({
-      reports: [report, ...state.reports],
-    })),
+    set((state) => {
+      const reports = [report, ...state.reports];
+      saveReportsToStorage(reports);
+      return { reports };
+    }),
   loadReports: async () => {
     set({ isLoading: true, error: null });
     try {
+      const cached = loadReportsFromStorage();
+      if (cached !== null) {
+        set({ reports: cached, isLoading: false });
+        return;
+      }
       const reports = await reportService.getReports();
+      saveReportsToStorage(reports);
       set({ reports, isLoading: false });
     } catch {
       set({

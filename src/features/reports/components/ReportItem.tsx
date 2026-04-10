@@ -11,7 +11,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
 });
 
 function ReportItemComponent({ report }: ReportItemProps) {
-  const estimatedSize = `${(report.id.length * 42).toFixed(0)} KB`;
+  const sizeLabel = report.fileSize ?? "—";
 
   return (
     <li className="report-item">
@@ -22,7 +22,7 @@ function ReportItemComponent({ report }: ReportItemProps) {
             <span>Type:</span> {report.testType}
           </p>
           <p className="report-item__meta">
-            <span>Size:</span> {estimatedSize}
+            <span>Size:</span> {sizeLabel}
           </p>
         </div>
       </div>

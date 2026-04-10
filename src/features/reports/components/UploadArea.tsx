@@ -15,6 +15,12 @@ import type { Report } from "../../../types/report";
 const ALLOWED_TYPES = new Set(["application/pdf", "text/csv"]);
 const ALLOWED_EXTENSIONS = [".pdf", ".csv"];
 
+function formatFileSize(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
 function UploadAreaComponent() {
   const [isDragActive, setIsDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -52,13 +58,13 @@ function UploadAreaComponent() {
       const result = await uploadReport(file);
       if (!result) return;
 
-      const fileNameWithoutExt = result.fileName.replace(/\.[^/.]+$/, "");
       const newReport: Report = {
         id: `rep-${Date.now()}`,
-        patientName: fileNameWithoutExt || "Uploaded Report",
+        patientName: result.fileName,
         testType: "Uploaded file",
         createdAt: new Date().toISOString(),
-        status: "reviewing",
+        status: "success",
+        fileSize: formatFileSize(file.size),
       };
       addReport(newReport);
       // Reset file input so the same file can be selected again immediately.
@@ -152,7 +158,11 @@ function UploadAreaComponent() {
       </p>
 
       {uploadStatus === "loading" ? (
-        <p className="upload-message" role="status" aria-live="polite">
+        <p
+          className="upload-message upload-message--loading"
+          role="status"
+          aria-live="polite"
+        >
           <span className="upload-spinner" aria-hidden="true" />
           Uploading...
         </p>

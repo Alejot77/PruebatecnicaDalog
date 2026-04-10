@@ -14,7 +14,7 @@ function SearchBarComponent({ value, onChange }: SearchBarProps) {
         type="search"
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        placeholder="Search by patient or test type"
+        placeholder="Search by report name"
         aria-controls="report-list"
       />
     </div>

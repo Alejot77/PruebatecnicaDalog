@@ -5,6 +5,7 @@ import { reportService } from "../services/reportService";
 import { uploadService } from "../services/uploadService";
 import { useReportStore } from "../state/reportStore";
 import { useUploadStore } from "../state/uploadStore";
+import { REPORTS_STORAGE_KEY } from "../utils/reportStorage";
 
 describe("Upload flow", () => {
   afterEach(() => {
@@ -13,6 +14,7 @@ describe("Upload flow", () => {
   });
 
   beforeEach(() => {
+    localStorage.removeItem(REPORTS_STORAGE_KEY);
     useReportStore.setState({
       reports: [],
       searchQuery: "",
@@ -51,7 +53,7 @@ describe("Upload flow", () => {
 
     await waitFor(() => {
       expect(screen.getByText(/Upload successful\./i)).toBeInTheDocument();
-      expect(screen.getByText("lab-results")).toBeInTheDocument();
+      expect(screen.getByText("lab-results.pdf")).toBeInTheDocument();
     });
   });
 

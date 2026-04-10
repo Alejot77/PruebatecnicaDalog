@@ -26,8 +26,10 @@ El objetivo es demostrar buenas prácticas en arquitectura, accesibilidad, rendi
   - `reportStore`: reportes, búsqueda, carga inicial y `addReport`.  
   - `uploadStore`: estado de upload (`idle/loading/success/error`) y mensajes.
 - **Servicios mock:**  
-  - `reportService` para obtener reportes.  
+  - `reportService` para obtener reportes (dataset inicial del challenge en `ReportDTO`, mapeado a `Report`).  
   - `uploadService` para simular subida con delay.
+- **DTO + mapper:** `ReportDTO` refleja el contrato del API; `mapReportDtoToReport` normaliza al modelo interno.
+- **Persistencia local:** `localStorage` guarda la lista de reportes y tiene prioridad sobre la carga mock al iniciar.
 - **Organización por features:**  
   - componentes y hooks agrupados por dominio (`reports`).
 - **Separación lógica vs UI:**  

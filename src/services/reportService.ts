@@ -1,27 +1,22 @@
+import { mapReportDtoToReport } from "../mappers/reportMapper";
 import type { Report } from "../types/report";
+import type { ReportDTO } from "../types/reportDto";
 import type { ReportApi } from "./api/reportApi";
 
-const MOCK_REPORTS: Report[] = [
+const INITIAL_REPORT_DTOS: ReportDTO[] = [
   {
-    id: "rep-001",
-    patientName: "John Carter",
-    testType: "Blood Test",
-    createdAt: "2026-04-09T10:00:00.000Z",
-    status: "ready",
+    id: 1,
+    name: "vibration_analysis_01.pdf",
+    size: "2.4MB",
+    type: "Vibration",
+    date: "2023-10-01",
   },
   {
-    id: "rep-002",
-    patientName: "Maria Lopez",
-    testType: "MRI",
-    createdAt: "2026-04-09T13:30:00.000Z",
-    status: "reviewing",
-  },
-  {
-    id: "rep-003",
-    patientName: "Alex Kim",
-    testType: "X-Ray",
-    createdAt: "2026-04-10T08:15:00.000Z",
-    status: "failed",
+    id: 2,
+    name: "motor_thermal_B.csv",
+    size: "1.1MB",
+    type: "Thermal",
+    date: "2023-10-02",
   },
 ];
 
@@ -31,8 +26,8 @@ const delay = (ms: number) =>
   });
 
 export const reportService: Pick<ReportApi, "getReports"> = {
-  async getReports() {
+  async getReports(): Promise<Report[]> {
     await delay(350);
-    return MOCK_REPORTS;
+    return INITIAL_REPORT_DTOS.map(mapReportDtoToReport);
   },
 };

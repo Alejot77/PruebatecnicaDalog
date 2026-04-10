@@ -6,21 +6,24 @@ import { reportService } from "../services/reportService";
 import { useReportStore } from "../state/reportStore";
 import { useUploadStore } from "../state/uploadStore";
 import type { Report } from "../types/report";
+import { REPORTS_STORAGE_KEY } from "../utils/reportStorage";
 
 const MOCK_REPORTS: Report[] = [
   {
-    id: "rep-001",
-    patientName: "John Carter",
-    testType: "Blood Test",
-    createdAt: "2026-04-09T10:00:00.000Z",
-    status: "ready",
+    id: "1",
+    patientName: "vibration_analysis_01.pdf",
+    testType: "Vibration",
+    createdAt: "2023-10-01",
+    status: "success",
+    fileSize: "2.4MB",
   },
   {
-    id: "rep-002",
-    patientName: "Maria Lopez",
-    testType: "MRI",
-    createdAt: "2026-04-09T13:30:00.000Z",
-    status: "reviewing",
+    id: "2",
+    patientName: "motor_thermal_B.csv",
+    testType: "Thermal",
+    createdAt: "2023-10-02",
+    status: "success",
+    fileSize: "1.1MB",
   },
 ];
 
@@ -30,6 +33,7 @@ describe("Report search", () => {
   });
 
   beforeEach(() => {
+    localStorage.removeItem(REPORTS_STORAGE_KEY);
     useReportStore.setState({
       reports: [],
       searchQuery: "",
@@ -46,15 +50,17 @@ describe("Report search", () => {
   it("filters report list when typing in search input", async () => {
     render(<App />);
 
-    await screen.findByText("John Carter");
-    expect(screen.getByText("Maria Lopez")).toBeInTheDocument();
+    await screen.findByText("vibration_analysis_01.pdf");
+    expect(screen.getByText("motor_thermal_B.csv")).toBeInTheDocument();
 
     const searchInput = screen.getByRole("searchbox", { name: /search reports/i });
-    await userEvent.type(searchInput, "maria");
+    await userEvent.type(searchInput, "motor");
 
     await waitFor(() => {
-      expect(screen.getByText("Maria Lopez")).toBeInTheDocument();
-      expect(screen.queryByText("John Carter")).not.toBeInTheDocument();
+      expect(screen.getByText("motor_thermal_B.csv")).toBeInTheDocument();
+      expect(
+        screen.queryByText("vibration_analysis_01.pdf"),
+      ).not.toBeInTheDocument();
     });
   });
 });

@@ -8,11 +8,8 @@ export function useFilteredReports(reports: Report[], searchQuery: string) {
       return reports;
     }
 
-    return reports.filter((report) => {
-      return (
-        report.patientName.toLowerCase().includes(query) ||
-        report.testType.toLowerCase().includes(query)
-      );
-    });
+    return reports.filter((report) =>
+      report.patientName.toLowerCase().includes(query),
+    );
   }, [reports, searchQuery]);
 }

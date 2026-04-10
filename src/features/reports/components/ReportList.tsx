@@ -10,7 +10,11 @@ interface ReportListProps {
 function ReportListComponent({ reports, isLoading }: ReportListProps) {
   if (isLoading) {
     return (
-      <p className="panel-message" role="status" aria-live="polite">
+      <p
+        className="panel-message panel-message--loading"
+        role="status"
+        aria-live="polite"
+      >
         Loading reports...
       </p>
     );
