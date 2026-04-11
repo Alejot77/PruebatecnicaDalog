@@ -143,6 +143,12 @@ body {
   box-shadow: var(--shadow-sm);
 }
 
+.panel--has-error {
+  border-color: #fca5a5;
+  background: linear-gradient(to bottom, #fef6f6 0%, var(--color-surface) 100%);
+  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.08), var(--shadow-sm);
+}
+
 .section-title {
   margin: 0 0 var(--space-2);
   font-size: var(--text-xs);
@@ -226,6 +232,46 @@ body {
   box-shadow: var(--shadow-card-hover);
 }
 
+.report-item--status-success {
+  border-color: #86efac;
+  background: linear-gradient(to right, #f0fdf4 0%, var(--color-surface) 40%);
+}
+
+.report-item--status-success:hover {
+  border-color: #4ade80;
+  background: linear-gradient(to right, #ecfdf5 0%, var(--color-surface-subtle) 45%);
+}
+
+.report-item--status-failed {
+  border-color: #fca5a5;
+  background: linear-gradient(to right, #fef6f6 0%, var(--color-surface) 40%);
+}
+
+.report-item--status-failed:hover {
+  border-color: #f87171;
+  background: linear-gradient(to right, #fef2f2 0%, var(--color-surface-subtle) 45%);
+}
+
+.report-item--status-ready {
+  border-color: #fcd34d;
+  background: linear-gradient(to right, #fffbeb 0%, var(--color-surface) 40%);
+}
+
+.report-item--status-ready:hover {
+  border-color: #fbbf24;
+  background: linear-gradient(to right, #fef3c7 0%, var(--color-surface-subtle) 45%);
+}
+
+.report-item--status-reviewing {
+  border-color: #93c5fd;
+  background: linear-gradient(to right, #eff6ff 0%, var(--color-surface) 40%);
+}
+
+.report-item--status-reviewing:hover {
+  border-color: #60a5fa;
+  background: linear-gradient(to right, #dbeafe 0%, var(--color-surface-subtle) 45%);
+}
+
 .report-item__main {
   min-width: 0;
 }
@@ -283,6 +329,30 @@ body {
   padding: 0.2rem 0.5rem;
 }
 
+.report-item--status-success .status-badge {
+  color: #047857;
+  background: #d1fae5;
+  border-color: #6ee7b7;
+}
+
+.report-item--status-failed .status-badge {
+  color: #b91c1c;
+  background: #fee2e2;
+  border-color: #fca5a5;
+}
+
+.report-item--status-ready .status-badge {
+  color: #b45309;
+  background: #fef3c7;
+  border-color: #fcd34d;
+}
+
+.report-item--status-reviewing .status-badge {
+  color: #1d4ed8;
+  background: #dbeafe;
+  border-color: #93c5fd;
+}
+
 .report-item__date {
   color: var(--color-text-muted);
   font-size: var(--text-xs);
@@ -322,10 +392,10 @@ body {
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--color-error-text);
-  background: var(--color-error-bg);
-  border: 1px solid var(--color-error-border);
+  background: #fee2e2;
+  border: 1px solid #f87171;
 }
 
 /* ——— Upload section ——— */

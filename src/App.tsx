@@ -87,7 +87,10 @@ function App() {
         </div>
       </header>
 
-      <section className="panel" aria-labelledby="reports-title">
+      <section
+        className={`panel${error ? " panel--has-error" : ""}`}
+        aria-labelledby="reports-title"
+      >
         <h2 id="reports-title" className="section-title">
           Reports
         </h2>

@@ -14,7 +14,7 @@ function ReportItemComponent({ report }: ReportItemProps) {
   const sizeLabel = report.fileSize ?? "—";
 
   return (
-    <li className="report-item">
+    <li className={`report-item report-item--status-${report.status}`}>
       <div className="report-item__main">
         <p className="report-item__title">{report.reportName}</p>
         <div className="report-item__meta-grid">
