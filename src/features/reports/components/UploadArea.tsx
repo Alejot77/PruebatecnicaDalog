@@ -123,9 +123,18 @@ function UploadAreaComponent() {
     return "";
   }, [uploadMessage, uploadStatus]);
 
+  const statusClass =
+    uploadStatus === "success"
+      ? "upload-area--status-success"
+      : uploadStatus === "error"
+        ? "upload-area--status-error"
+        : uploadStatus === "loading"
+          ? "upload-area--status-loading"
+          : "";
+
   return (
     <section
-      className={`upload-area ${isDragActive ? "upload-area--active" : ""}`}
+      className={`upload-area ${isDragActive ? "upload-area--active" : ""} ${statusClass}`.trim()}
       aria-labelledby="upload-title"
       onDragEnter={handleDragEnter}
       onDragOver={handleDragOver}
@@ -133,8 +142,20 @@ function UploadAreaComponent() {
       onDrop={handleDrop}
       role="region"
     >
-      <h2 id="upload-title">Upload report</h2>
-      <p>Drag and drop a file here, or select one manually.</p>
+      <div className="upload-area__header">
+        <div className="upload-area__intro">
+          <h2 id="upload-title">Upload report</h2>
+          <p>Drag and drop a file here, or select one manually.</p>
+        </div>
+        <button
+          type="button"
+          className="upload-area__button"
+          onClick={handleDropzoneClick}
+          aria-describedby="upload-help"
+        >
+          Select file
+        </button>
+      </div>
 
       <div
         className="upload-area__dropzone"
@@ -143,15 +164,6 @@ function UploadAreaComponent() {
         <span className="upload-area__icon">^</span>
         <span>Drop file here or use the button to select</span>
       </div>
-
-      <button
-        type="button"
-        className="upload-area__button"
-        onClick={handleDropzoneClick}
-        aria-describedby="upload-help"
-      >
-        Select file
-      </button>
 
       <input
         ref={fileInputRef}
