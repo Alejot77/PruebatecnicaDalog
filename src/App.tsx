@@ -49,41 +49,16 @@ function App() {
       <header className="app-header">
         <div className="app-header__row">
           <div className="app-header__titles">
-            <h1>Diagnostic Report Manager</h1>
+            <h1>Diagnostic <br /> Report  Manager</h1>
             <p>Base architecture ready for upload flow and accessibility enhancements.</p>
           </div>
           <div className="app-header__logo" aria-hidden="true">
-            <svg
-              className="app-header__logo-svg"
-              viewBox="0 0 48 48"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                x="4"
-                y="6"
-                width="32"
-                height="38"
-                rx="3"
-                stroke="currentColor"
-                strokeWidth="2"
-              />
-              <path
-                d="M12 14h16M12 22h10M12 30h14"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-              <circle cx="38" cy="14" r="8" fill="currentColor" opacity="0.15" />
-              <path
-                d="M34 18l3-3 4 5"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
+          <img
+            src="https://dalog.net/wp-content/uploads/2026/01/logo-color.svg"
+            alt="Dalog logo"
+            className="app-header__logo-img"
+          />
+        </div>
         </div>
       </header>
 
